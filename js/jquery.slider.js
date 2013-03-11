@@ -45,7 +45,7 @@
 	  return jNode.data( "jslider" );
 	};
 	
-	$.fn.jslider = $.fn.slider = function( action, opt_value ){
+	$.fn.jslider = function( action, opt_value ){
 	  var returnValue, args = arguments;
 	  
 	  function isDef( val ){
@@ -148,6 +148,10 @@
 		
 		return returnValue || this;
 	};
+  
+  if (!$.fn.slider) {
+    $.fn.slider = $.fn.jslider;
+  }
   
   var OPTIONS = {
 
