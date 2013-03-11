@@ -18,7 +18,8 @@
       "dist/jquery-slider.amd.min.js",
       "dist/jquery-slider.min.css",
       "README.md",
-      "MIT_LICENSE.md",
+      "CHANGES.md",
+      "MIT_LICENSE.txt",
       "package.json",
       "img"
     ]
