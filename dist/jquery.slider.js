@@ -1213,7 +1213,7 @@ var Hashtable = (function() {
 	  return jNode.data( "jslider" );
 	};
 	
-	$.fn.jslider = $.fn.slider = function( action, opt_value ){
+	$.fn.jslider = function( action, opt_value ){
 	  var returnValue, args = arguments;
 	  
 	  function isDef( val ){
@@ -1317,6 +1317,10 @@ var Hashtable = (function() {
 		return returnValue || this;
 	};
   
+  if (!$.fn.slider) {
+    $.fn.slider = $.fn.jslider;
+  }
+  
   var OPTIONS = {
 
     settings: {
@@ -1368,9 +1372,15 @@ var Hashtable = (function() {
     
     // obj.sliderHandler = this;
     this.inputNode = $( node ).hide();
+    if (this.inputNode.prop("tagName") !== 'INPUT') {
+      throw "jquery.slider: Slider must only be applied to INPUT elements.";
+    }
     						
 		this.settings.interval = this.settings.to-this.settings.from;
 		this.settings.value = this.inputNode.attr("value");
+		if (this.settings.value === null || this.settings.value === undefined) {
+		  throw "jquery.slider: INPUT element does not have a value.";
+		}
 		
 		if( this.settings.calculate && $.isFunction( this.settings.calculate ) )
 		  this.nice = this.settings.calculate;
@@ -1500,7 +1510,7 @@ var Hashtable = (function() {
     if( this.settings.scale && this.settings.scale.length > 0 ){
       var str = "";
       var s = this.settings.scale;
-      var prc = Math.round((100/(s.length-1))*10)/10;
+      var prc = Math.min(Math.max(0, Math.round((100/(s.length-1))*10000)/10000), 100);
       for( var i=0; i < s.length; i++ ){
         str += '<span style="left: ' + i*prc + '%">' + ( s[i] != '|' ? '<ins>' + s[i] + '</ins>' : '' ) + '</span>';
       };
