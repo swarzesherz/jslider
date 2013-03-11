@@ -1,5 +1,5 @@
 {
-  "name": "jquery-slider",
+  "name": "jquery.slider",
   "version": "1.1.0",
   "description": "Jquery slider",
   "homepage": "http://egorkhmelev.github.com/jslider/",
@@ -13,7 +13,7 @@
     "yuicompressor": "~2.4.7"
   },
   "jam": {
-    "main": "dist/jquery-slider.amd.min.js",
+    "main": "dist/jquery.slider.amd.min.js",
     "include": [
       "dist/jquery-slider.amd.min.js",
       "dist/jquery-slider.min.css",
