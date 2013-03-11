@@ -7,7 +7,7 @@
  * Licensed under the MIT (MIT-LICENSE.txt).
  *
  * @author Egor Khmelev
- * @version 0.1.0-BETA ($Id$)
+ * @version 0.2.0-BETA ($Id$)
  * 
  **/
 
@@ -174,13 +174,13 @@
 
 			if( this.outer && this.outer.get(0) ){
 
-				if( $.browser.mozilla ){
+				if( navigator.userAgent.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/i.test(navigator.userAgent)){
 					this.outer.css({ overflow: "hidden" });
 				} else {
 					this.outer.css({ overflow: "visible" });
 				}
 
-        if( $.browser.msie && $.browser.version == '6.0' ){
+        if( /(msie) 6.0/i.test(navigator.userAgent) ){
          this.outer.css({ height: "100%" });
         } else {
          this.outer.css({ height: "auto" });
