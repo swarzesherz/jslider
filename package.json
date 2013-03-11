@@ -15,8 +15,8 @@
   "jam": {
     "main": "dist/jquery.slider.amd.min.js",
     "include": [
-      "dist/jquery-slider.amd.min.js",
-      "dist/jquery-slider.min.css",
+      "dist/jquery.slider.amd.min.js",
+      "dist/jquery.slider.min.css",
       "README.md",
       "CHANGES.md",
       "MIT_LICENSE.txt",
