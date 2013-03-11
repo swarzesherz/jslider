@@ -45,7 +45,7 @@
 	  return jNode.data( "jslider" );
 	};
 	
-	$.fn.slider = function( action, opt_value ){
+	$.fn.jslider = $.fn.slider = function( action, opt_value ){
 	  var returnValue, args = arguments;
 	  
 	  function isDef( val ){
