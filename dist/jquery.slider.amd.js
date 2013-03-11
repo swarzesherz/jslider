@@ -1,4 +1,4 @@
-define('jquery-slider',
+define('jquery.slider',
   ['jquery'],
   function (jQuery) {
 
