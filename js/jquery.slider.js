@@ -342,7 +342,7 @@
     if( this.settings.scale && this.settings.scale.length > 0 ){
       var str = "";
       var s = this.settings.scale;
-      var prc = Math.round((100/(s.length-1))*10)/10;
+      var prc = Math.min(Math.max(0, Math.round((100/(s.length-1))*10000)/10000), 100);
       for( var i=0; i < s.length; i++ ){
         str += '<span style="left: ' + i*prc + '%">' + ( s[i] != '|' ? '<ins>' + s[i] + '</ins>' : '' ) + '</span>';
       };
