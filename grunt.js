@@ -3,7 +3,15 @@ module.exports = function(grunt) {
   var cssMin = {
       src: 'dist/<%= pkg.name %>.css',
       dest: 'dist/<%= pkg.name %>.min.css'
-    };
+    },
+    jsOrder = [
+      'js/jshashtable-2.1_src.js',
+      'js/tmpl.js',
+      'js/jquery.dependClass-0.1.js',
+      'js/jquery.numberformatter-1.2.3.js',
+      'js/draggable-0.2.js',
+      'js/jquery.slider.js'
+    ];
 
   // Project configuration.
   grunt.initConfig({
@@ -15,11 +23,11 @@ module.exports = function(grunt) {
     build: {main: {}, amd: {}, css: {}},
     concat: {
       amd: {
-        src: ['templates/amd_top.js', 'js/*.js', 'templates/amd_bottom.js'],
+        src: ['templates/amd_top.js'].concat(jsOrder).concat(['templates/amd_bottom.js']),
         dest: 'dist/<%= pkg.name %>.amd.js'
       },
       main: {
-        src: ['js/*.js'],
+        src: jsOrder,
         dest: 'dist/<%= pkg.name %>.js'
       },
       css: {
