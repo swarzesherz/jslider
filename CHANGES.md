@@ -5,6 +5,8 @@ unreleased
   with [jQuery-ui](http://jqueryui.com). egorkhmelev/jslider#53.
 * Added more meaningful errors when slider is applied to non-`INPUT` elements
   and elements without values. egorkhmelev/jslider#7.
+* Change scale generation code to position elements with greater accuracy.
+  egorkhmelev/jslider#9.
 
 1.1.0
 =====
