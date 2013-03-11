@@ -1,3 +1,9 @@
+unreleased
+==========
+
+* Don't overwrite `$.slider` if it already exists. Further avoids conflict
+  with [jQuery-ui](http://jqueryui.com).
+
 1.1.0
 =====
 
