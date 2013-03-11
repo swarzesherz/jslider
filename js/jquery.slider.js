@@ -204,9 +204,15 @@
     
     // obj.sliderHandler = this;
     this.inputNode = $( node ).hide();
+    if (this.inputNode.prop("tagName") !== 'INPUT') {
+      throw "jquery.slider: Slider must only be applied to INPUT elements.";
+    }
     						
 		this.settings.interval = this.settings.to-this.settings.from;
 		this.settings.value = this.inputNode.attr("value");
+		if (this.settings.value === null || this.settings.value === undefined) {
+		  throw "jquery.slider: INPUT element does not have a value.";
+		}
 		
 		if( this.settings.calculate && $.isFunction( this.settings.calculate ) )
 		  this.nice = this.settings.calculate;
