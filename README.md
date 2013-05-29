@@ -2,12 +2,13 @@
 
 jQuery Slider is easy to use and multifunctional jQuery plugin.
 
-[Check out demos and documentations here](http://egorkhmelev.github.com/jslider/)
+[Check out demos and documentations here](http://SalesSeek.github.com/jslider/)
 
 ## Bugs / Pull requests
 
-THIS PROJECT IS NOT MAINTAINED ANYMORE. You are free to fork it and start a new project.
-I will add the best forks here.
+This project was originally developed by
+[Egor Khmelev](https://github.com/egorkhmelev) and is now maintained by
+SalesSeek Limited.
 
 ## License
 
