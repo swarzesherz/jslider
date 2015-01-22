@@ -228,7 +228,7 @@
       this.inputNode.css('display', '');
 
       //destroy bindings on input node, keep the dom element itself.
-      this.inputNode.die();
+      this.inputNode.off();
 
       //delete the slider data
       this.inputNode.removeData("jslider");

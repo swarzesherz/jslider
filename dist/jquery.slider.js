@@ -1222,100 +1222,117 @@ var Hashtable = (function() {
 
 	  function isDefAndNotNull( val ){
       return val != null;
-	  };
-	  
-		this.each(function(){
-		  var self = $.slider( this, action );
-		  
-		  // do actions
-		  if( typeof action == "string" ){
-		    switch( action ){
-		      case "value":
-		        if( isDef( args[ 1 ] ) && isDef( args[ 2 ] ) ){
-		          var pointers = self.getPointers();
-		          if( isDefAndNotNull( pointers[0] ) && isDefAndNotNull( args[1] ) ){
-		            pointers[0].set( args[ 1 ] );
-		            pointers[0].setIndexOver();
-		          }
-		          
-		          if( isDefAndNotNull( pointers[1] ) && isDefAndNotNull( args[2] ) ){
-		            pointers[1].set( args[ 2 ] );
-		            pointers[1].setIndexOver();
-		          }
-		        }
-		        
-		        else if( isDef( args[ 1 ] ) ){
-		          var pointers = self.getPointers();
-		          if( isDefAndNotNull( pointers[0] ) && isDefAndNotNull( args[1] ) ){
-		            pointers[0].set( args[ 1 ] );
-		            pointers[0].setIndexOver();
-		          }
-		        }
-		        
-		        else
-  		        returnValue = self.getValue();
+    };
+    
+    this.each(function(){
+      var self = $.slider( this, action );
+      
+      // do actions
+      if( typeof action == "string" ){
+        switch( action ){
+          case "value":
+            if( isDef( args[ 1 ] ) && isDef( args[ 2 ] ) ){
+              var pointers = self.getPointers();
+              if( isDefAndNotNull( pointers[0] ) && isDefAndNotNull( args[1] ) ){
+                pointers[0].set( args[ 1 ] );
+                pointers[0].setIndexOver();
+              }
+              
+              if( isDefAndNotNull( pointers[1] ) && isDefAndNotNull( args[2] ) ){
+                pointers[1].set( args[ 2 ] );
+                pointers[1].setIndexOver();
+              }
+            }
+            
+            else if( isDef( args[ 1 ] ) ){
+              var pointers = self.getPointers();
+              if( isDefAndNotNull( pointers[0] ) && isDefAndNotNull( args[1] ) ){
+                pointers[0].set( args[ 1 ] );
+                pointers[0].setIndexOver();
+              }
+            }
+            
+            else
+              returnValue = self.getValue();
 
-		        break;
+            break;
 
-		      case "prc":
-		        if( isDef( args[ 1 ] ) && isDef( args[ 2 ] ) ){
-		          var pointers = self.getPointers();
-		          if( isDefAndNotNull( pointers[0] ) && isDefAndNotNull( args[1] ) ){
-		            pointers[0]._set( args[ 1 ] );
-		            pointers[0].setIndexOver();
-		          }
+          case "prc":
+            if( isDef( args[ 1 ] ) && isDef( args[ 2 ] ) ){
+              var pointers = self.getPointers();
+              if( isDefAndNotNull( pointers[0] ) && isDefAndNotNull( args[1] ) ){
+                pointers[0]._set( args[ 1 ] );
+                pointers[0].setIndexOver();
+              }
 
-		          if( isDefAndNotNull( pointers[1] ) && isDefAndNotNull( args[2] ) ){
-		            pointers[1]._set( args[ 2 ] );
-		            pointers[1].setIndexOver();
-		          }
-		        }
+              if( isDefAndNotNull( pointers[1] ) && isDefAndNotNull( args[2] ) ){
+                pointers[1]._set( args[ 2 ] );
+                pointers[1].setIndexOver();
+              }
+            }
 
-		        else if( isDef( args[ 1 ] ) ){
-		          var pointers = self.getPointers();
-		          if( isDefAndNotNull( pointers[0] ) && isDefAndNotNull( args[1] ) ){
-		            pointers[0]._set( args[ 1 ] );
-		            pointers[0].setIndexOver();
-		          }
-		        }
+            else if( isDef( args[ 1 ] ) ){
+              var pointers = self.getPointers();
+              if( isDefAndNotNull( pointers[0] ) && isDefAndNotNull( args[1] ) ){
+                pointers[0]._set( args[ 1 ] );
+                pointers[0].setIndexOver();
+              }
+            }
 
-		        else
-  		        returnValue = self.getPrcValue();
+            else
+              returnValue = self.getPrcValue();
 
-		        break;
+            break;
 
-  		    case "calculatedValue":
-  		      var value = self.getValue().split(";");
-  		      returnValue = "";
-  		      for (var i=0; i < value.length; i++) {
-  		        returnValue += (i > 0 ? ";" : "") + self.nice( value[i] );
-  		      };
-  		      
-  		      break;
-  		      
-  		    case "skin":
-		        self.setSkin( args[1] );
+          case "calculatedValue":
+            var value = self.getValue().split(";");
+            returnValue = "";
+            for (var i=0; i < value.length; i++) {
+              returnValue += (i > 0 ? ";" : "") + self.nice( value[i] );
+            };
+            
+            break;
+            
+          case "skin":
+            self.setSkin( args[1] );
 
-  		      break;
-		    };
-		  
-		  }
-		  
-		  // return actual object
-		  else if( !action && !opt_value ){
-		    if( !isArray( returnValue ) )
-		      returnValue = [];
+            break;
 
-		    returnValue.push( self );
-		  }
-		});
-		
-		// flatten array just with one slider
-		if( isArray( returnValue ) && returnValue.length == 1 )
-		  returnValue = returnValue[ 0 ];
-		
-		return returnValue || this;
-	};
+          case "redraw":
+            self.domNode.remove();
+
+            if(isDefAndNotNull(args[1])){
+            $.extend(true,self.settings,args[1]);
+
+            self.settings.interval = self.settings.to - self.settings.from;
+            self.settings.value = self.inputNode.attr("value");
+            self.is = {
+            init: false
+            };
+            self.o = {};
+            }
+
+            self.create();
+            break;
+        };
+      
+      }
+      
+      // return actual object
+      else if( !action && !opt_value ){
+        if( !isArray( returnValue ) )
+          returnValue = [];
+
+        returnValue.push( self );
+      }
+    });
+    
+    // flatten array just with one slider
+    if( isArray( returnValue ) && returnValue.length == 1 )
+      returnValue = returnValue[ 0 ];
+    
+    return returnValue || this;
+  };
   
   if (!$.fn.slider) {
     $.fn.slider = $.fn.jslider;
@@ -1364,7 +1381,29 @@ var Hashtable = (function() {
   };
 
   function jSlider(){
-  	return this.init.apply( this, arguments );
+    return this.init.apply( this, arguments );
+  };
+
+  jSlider.prototype.destroy = function()
+  {
+      if (this._destroyed)
+          throw "this slider was already deleted";
+
+      //mark as destroyed
+      this._destroyed = true;
+
+      //unhide the input node
+      this.inputNode.css('display', '');
+
+      //destroy bindings on input node, keep the dom element itself.
+      this.inputNode.off();
+
+      //delete the slider data
+      this.inputNode.removeData("jslider");
+
+      //destroy the created slider dom element
+      this.domNode.remove();
+      this.domNode = null;
   };
 
   jSlider.prototype.init = function( node, settings ){
@@ -1385,13 +1424,13 @@ var Hashtable = (function() {
 		if( this.settings.calculate && $.isFunction( this.settings.calculate ) )
 		  this.nice = this.settings.calculate;
 
-		if( this.settings.onstatechange && $.isFunction( this.settings.onstatechange ) )
-		  this.onstatechange = this.settings.onstatechange;
+    if( this.settings.onstatechange && $.isFunction( this.settings.onstatechange ) )
+      this.onstatechange = this.settings.onstatechange;
 
     this.is = {
       init: false
     };
-		this.o = {};
+    this.o = {};
 
     this.create();
   };
@@ -1420,10 +1459,10 @@ var Hashtable = (function() {
     if( this.settings.skin && this.settings.skin.length > 0 )
       this.setSkin( this.settings.skin );
 
-		this.sizes = {
-		  domWidth: this.domNode.width(),
-		  domOffset: this.domNode.offset()
-		};
+    this.sizes = {
+      domWidth: this.domNode.width(),
+      domOffset: this.domNode.offset()
+    };
 
     // find some objects
     $.extend(this.o, {
@@ -1528,10 +1567,10 @@ var Hashtable = (function() {
   
   jSlider.prototype.onresize = function(){
     var self = this;
-		this.sizes = {
-		  domWidth: this.domNode.width(),
-		  domOffset: this.domNode.offset()
-		};
+    this.sizes = {
+      domWidth: this.domNode.width(),
+      domOffset: this.domNode.offset()
+    };
 
     $.each(this.o.pointers, function(i){
       self.redraw(this);
@@ -1544,20 +1583,20 @@ var Hashtable = (function() {
   };
   
   jSlider.prototype.limits = function( x, pointer ){
-	  // smooth
-	  if( !this.settings.smooth ){
-	    var step = this.settings.step*100 / ( this.settings.interval );
-	    x = Math.round( x/step ) * step;
-	  }
-	  
-	  var another = this.o.pointers[1-pointer.uid];
-	  if( another && pointer.uid && x < another.value.prc ) x = another.value.prc;
-	  if( another && !pointer.uid && x > another.value.prc ) x = another.value.prc;
+    // smooth
+    if( !this.settings.smooth ){
+      var step = this.settings.step*100 / ( this.settings.interval );
+      x = Math.round( x/step ) * step;
+    }
+    
+    var another = this.o.pointers[1-pointer.uid];
+    if( another && pointer.uid && x < another.value.prc ) x = another.value.prc;
+    if( another && !pointer.uid && x > another.value.prc ) x = another.value.prc;
 
     // base limit
-	  if( x < 0 ) x = 0;
-	  if( x > 100 ) x = 100;
-	  
+    if( x < 0 ) x = 0;
+    if( x > 100 ) x = 100;
+    
     return Math.round( x*10 ) / 10;
   };
   
@@ -1584,7 +1623,7 @@ var Hashtable = (function() {
   jSlider.prototype.redrawLabels = function( pointer ){
 
     function setPosition( label, sizes, prc ){
-  	  sizes.margin = -sizes.label/2;
+      sizes.margin = -sizes.label/2;
 
       // left limit
       label_left = sizes.border + sizes.margin;
@@ -1604,51 +1643,51 @@ var Hashtable = (function() {
     }
 
     var self = this;
-	  var label = this.o.labels[pointer.uid];
-	  var prc = pointer.value.prc;
+    var label = this.o.labels[pointer.uid];
+    var prc = pointer.value.prc;
 
-	  var sizes = {
-	    label: label.o.outerWidth(),
-	    right: false,
-	    border: ( prc * this.sizes.domWidth ) / 100
-	  };
+    var sizes = {
+      label: label.o.outerWidth(),
+      right: false,
+      border: ( prc * this.sizes.domWidth ) / 100
+    };
 
     if( !this.settings.single ){
       // glue if near;
       var another = this.o.pointers[1-pointer.uid];
-    	var another_label = this.o.labels[another.uid];
+      var another_label = this.o.labels[another.uid];
 
       switch( pointer.uid ){
         case 0:
           if( sizes.border+sizes.label / 2 > another_label.o.offset().left-this.sizes.domOffset.left ){
             another_label.o.css({ visibility: "hidden" });
-        	  another_label.value.html( this.nice( another.value.origin ) );
+            another_label.value.html( this.nice( another.value.origin ) );
 
-          	label.o.css({ visibility: "visible" });
+            label.o.css({ visibility: "visible" });
 
-          	prc = ( another.value.prc - prc ) / 2 + prc;
-          	if( another.value.prc != pointer.value.prc ){
-          	  label.value.html( this.nice(pointer.value.origin) + "&nbsp;&ndash;&nbsp;" + this.nice(another.value.origin) );
-            	sizes.label = label.o.outerWidth();
-            	sizes.border = ( prc * this.sizes.domWidth ) / 100;
+            prc = ( another.value.prc - prc ) / 2 + prc;
+            if( another.value.prc != pointer.value.prc ){
+              label.value.html( this.nice(pointer.value.origin) + "&nbsp;&ndash;&nbsp;" + this.nice(another.value.origin) );
+              sizes.label = label.o.outerWidth();
+              sizes.border = ( prc * this.sizes.domWidth ) / 100;
             }
           } else {
-          	another_label.o.css({ visibility: "visible" });
+            another_label.o.css({ visibility: "visible" });
           }
           break;
 
         case 1:
           if( sizes.border - sizes.label / 2 < another_label.o.offset().left - this.sizes.domOffset.left + another_label.o.outerWidth() ){
             another_label.o.css({ visibility: "hidden" });
-        	  another_label.value.html( this.nice(another.value.origin) );
+            another_label.value.html( this.nice(another.value.origin) );
 
-          	label.o.css({ visibility: "visible" });
+            label.o.css({ visibility: "visible" });
 
-          	prc = ( prc - another.value.prc ) / 2 + another.value.prc;
-          	if( another.value.prc != pointer.value.prc ){
-          	  label.value.html( this.nice(another.value.origin) + "&nbsp;&ndash;&nbsp;" + this.nice(pointer.value.origin) );
-            	sizes.label = label.o.outerWidth();
-            	sizes.border = ( prc * this.sizes.domWidth ) / 100;
+            prc = ( prc - another.value.prc ) / 2 + another.value.prc;
+            if( another.value.prc != pointer.value.prc ){
+              label.value.html( this.nice(another.value.origin) + "&nbsp;&ndash;&nbsp;" + this.nice(pointer.value.origin) );
+              sizes.label = label.o.outerWidth();
+              sizes.border = ( prc * this.sizes.domWidth ) / 100;
             }
           } else {
             another_label.o.css({ visibility: "visible" });
@@ -1662,18 +1701,18 @@ var Hashtable = (function() {
     /* draw second label */
     if( another_label ){
       var sizes = {
-  	    label: another_label.o.outerWidth(),
-  	    right: false,
-  	    border: ( another.value.prc * this.sizes.domWidth ) / 100
-  	  };
+        label: another_label.o.outerWidth(),
+        right: false,
+        border: ( another.value.prc * this.sizes.domWidth ) / 100
+      };
       sizes = setPosition( another_label, sizes, another.value.prc );
     }
-	  
+    
     this.redrawLimits();
   };
   
   jSlider.prototype.redrawLimits = function(){
-	  if( this.settings.limits ){
+    if( this.settings.limits ){
 
       var limits = [ true, true ];
 
@@ -1681,18 +1720,18 @@ var Hashtable = (function() {
 
         if( !this.settings.single || key == 0 ){
         
-      	  var pointer = this.o.pointers[key];
+          var pointer = this.o.pointers[key];
           var label = this.o.labels[pointer.uid];
           var label_left = label.o.offset().left - this.sizes.domOffset.left;
 
-      	  var limit = this.o.limits[0];
+          var limit = this.o.limits[0];
           if( label_left < limit.outerWidth() )
             limits[0] = false;
 
-      	  var limit = this.o.limits[1];
-      	  if( label_left + label.o.outerWidth() > this.sizes.domWidth - limit.outerWidth() )
-      	    limits[1] = false;
-      	}
+          var limit = this.o.limits[1];
+          if( label_left + label.o.outerWidth() > this.sizes.domWidth - limit.outerWidth() )
+            limits[1] = false;
+        }
 
       };
 
@@ -1703,7 +1742,7 @@ var Hashtable = (function() {
           this.o.limits[i].fadeOut("fast");
       };
 
-	  }
+    }
   };
   
   jSlider.prototype.setValue = function(){
@@ -1736,82 +1775,82 @@ var Hashtable = (function() {
   
   jSlider.prototype.prcToValue = function( prc ){
 
-	  if( this.settings.heterogeneity && this.settings.heterogeneity.length > 0 ){
-  	  var h = this.settings.heterogeneity;
+    if( this.settings.heterogeneity && this.settings.heterogeneity.length > 0 ){
+      var h = this.settings.heterogeneity;
 
-  	  var _start = 0;
-  	  var _from = this.settings.from;
+      var _start = 0;
+      var _from = this.settings.from;
 
-  	  for( var i=0; i <= h.length; i++ ){
-  	    if( h[i] ) var v = h[i].split("/");
-  	    else       var v = [100, this.settings.to];
-  	    
-  	    v[0] = new Number(v[0]);
-  	    v[1] = new Number(v[1]);
-  	      
-  	    if( prc >= _start && prc <= v[0] ) {
-  	      var value = _from + ( (prc-_start) * (v[1]-_from) ) / (v[0]-_start);
-  	    }
+      for( var i=0; i <= h.length; i++ ){
+        if( h[i] ) var v = h[i].split("/");
+        else       var v = [100, this.settings.to];
+        
+        v[0] = new Number(v[0]);
+        v[1] = new Number(v[1]);
+          
+        if( prc >= _start && prc <= v[0] ) {
+          var value = _from + ( (prc-_start) * (v[1]-_from) ) / (v[0]-_start);
+        }
 
-  	    _start = v[0];
-  	    _from = v[1];
-  	  };
+        _start = v[0];
+        _from = v[1];
+      };
 
-	  } else {
+    } else {
       var value = this.settings.from + ( prc * this.settings.interval ) / 100;
-	  }
+    }
 
     return this.round( value );
   };
   
-	jSlider.prototype.valueToPrc = function( value, pointer ){  	  
-	  if( this.settings.heterogeneity && this.settings.heterogeneity.length > 0 ){
-  	  var h = this.settings.heterogeneity;
+  jSlider.prototype.valueToPrc = function( value, pointer ){      
+    if( this.settings.heterogeneity && this.settings.heterogeneity.length > 0 ){
+      var h = this.settings.heterogeneity;
 
-  	  var _start = 0;
-  	  var _from = this.settings.from;
+      var _start = 0;
+      var _from = this.settings.from;
 
-  	  for (var i=0; i <= h.length; i++) {
-  	    if(h[i]) var v = h[i].split("/");
-  	    else     var v = [100, this.settings.to];
-  	    v[0] = new Number(v[0]); v[1] = new Number(v[1]);
-  	      
-  	    if(value >= _from && value <= v[1]){
-  	      var prc = pointer.limits(_start + (value-_from)*(v[0]-_start)/(v[1]-_from));
-  	    }
+      for (var i=0; i <= h.length; i++) {
+        if(h[i]) var v = h[i].split("/");
+        else     var v = [100, this.settings.to];
+        v[0] = new Number(v[0]); v[1] = new Number(v[1]);
+          
+        if(value >= _from && value <= v[1]){
+          var prc = pointer.limits(_start + (value-_from)*(v[0]-_start)/(v[1]-_from));
+        }
 
-  	    _start = v[0]; _from = v[1];
-  	  };
+        _start = v[0]; _from = v[1];
+      };
 
-	  } else {
-  	  var prc = pointer.limits((value-this.settings.from)*100/this.settings.interval);
-	  }
+    } else {
+      var prc = pointer.limits((value-this.settings.from)*100/this.settings.interval);
+    }
 
-	  return prc;
-	};
+    return prc;
+  };
   
-	jSlider.prototype.round = function( value ){
+  jSlider.prototype.round = function( value ){
     value = Math.round( value / this.settings.step ) * this.settings.step;
-		if( this.settings.round ) value = Math.round( value * Math.pow(10, this.settings.round) ) / Math.pow(10, this.settings.round);
-		else value = Math.round( value );
-		return value;
-	};
-	
-	jSlider.prototype.nice = function( value ){
-		value = value.toString().replace(/,/gi, ".").replace(/ /gi, "");;
+    if( this.settings.round ) value = Math.round( value * Math.pow(10, this.settings.round) ) / Math.pow(10, this.settings.round);
+    else value = Math.round( value );
+    return value;
+  };
+  
+  jSlider.prototype.nice = function( value ){
+    value = value.toString().replace(/,/gi, ".").replace(/ /gi, "");;
 
-		if( $.formatNumber ){
-		  return $.formatNumber( new Number(value), this.settings.format || {} ).replace( /-/gi, "&minus;" );
-		}
-		  
-		else {
-		  return new Number(value);
-		}
-	};
+    if( $.formatNumber ){
+      return $.formatNumber( new Number(value), this.settings.format || {} ).replace( /-/gi, "&minus;" );
+    }
+      
+    else {
+      return new Number(value);
+    }
+  };
 
   
   function jSliderPointer(){
-  	Draggable.apply( this, arguments );
+    Draggable.apply( this, arguments );
   }
   jSliderPointer.prototype = new Draggable();
   
@@ -1823,56 +1862,56 @@ var Hashtable = (function() {
   };
   
   jSliderPointer.prototype.onmousedown = function(evt){
-	  this._parent = {
-	    offset: this.parent.domNode.offset(),
-	    width: this.parent.domNode.width()
-	  };
-	  this.ptr.addDependClass("hover");
-	  this.setIndexOver();
-	};
+    this._parent = {
+      offset: this.parent.domNode.offset(),
+      width: this.parent.domNode.width()
+    };
+    this.ptr.addDependClass("hover");
+    this.setIndexOver();
+  };
 
-	jSliderPointer.prototype.onmousemove = function( evt, x ){
-	  var coords = this._getPageCoords( evt );
-	  this._set( this.calc( coords.x ) );
-	};
-	
-	jSliderPointer.prototype.onmouseup = function( evt ){
-	  if( this.parent.settings.callback && $.isFunction(this.parent.settings.callback) )
-	    this.parent.settings.callback.call( this.parent, this.parent.getValue() );
-	    
-	  this.ptr.removeDependClass("hover");
-	};
-	
-	jSliderPointer.prototype.setIndexOver = function(){
-	  this.parent.setPointersIndex( 1 );
-	  this.index( 2 );
-	};
-	
-	jSliderPointer.prototype.index = function( i ){
-	  this.ptr.css({ zIndex: i });
-	};
-	
-	jSliderPointer.prototype.limits = function( x ){
-	  return this.parent.limits( x, this );
-	};
-	
-	jSliderPointer.prototype.calc = function(coords){
-	  var x = this.limits(((coords-this._parent.offset.left)*100)/this._parent.width);
-	  return x;
-	};
+  jSliderPointer.prototype.onmousemove = function( evt, x ){
+    var coords = this._getPageCoords( evt );
+    this._set( this.calc( coords.x ) );
+  };
+  
+  jSliderPointer.prototype.onmouseup = function( evt ){
+    if( this.parent.settings.callback && $.isFunction(this.parent.settings.callback) )
+      this.parent.settings.callback.call( this.parent, this.parent.getValue() );
+      
+    this.ptr.removeDependClass("hover");
+  };
+  
+  jSliderPointer.prototype.setIndexOver = function(){
+    this.parent.setPointersIndex( 1 );
+    this.index( 2 );
+  };
+  
+  jSliderPointer.prototype.index = function( i ){
+    this.ptr.css({ zIndex: i });
+  };
+  
+  jSliderPointer.prototype.limits = function( x ){
+    return this.parent.limits( x, this );
+  };
+  
+  jSliderPointer.prototype.calc = function(coords){
+    var x = this.limits(((coords-this._parent.offset.left)*100)/this._parent.width);
+    return x;
+  };
 
-	jSliderPointer.prototype.set = function( value, opt_origin ){
-	  this.value.origin = this.parent.round(value);
-	  this._set( this.parent.valueToPrc( value, this ), opt_origin );
-	};
-	
-	jSliderPointer.prototype._set = function( prc, opt_origin ){
-	  if( !opt_origin )
-	    this.value.origin = this.parent.prcToValue(prc);
+  jSliderPointer.prototype.set = function( value, opt_origin ){
+    this.value.origin = this.parent.round(value);
+    this._set( this.parent.valueToPrc( value, this ), opt_origin );
+  };
+  
+  jSliderPointer.prototype._set = function( prc, opt_origin ){
+    if( !opt_origin )
+      this.value.origin = this.parent.prcToValue(prc);
 
-	  this.value.prc = prc;
-		this.ptr.css({ left: prc + "%" });
-	  this.parent.redraw(this);
-	};
+    this.value.prc = prc;
+    this.ptr.css({ left: prc + "%" });
+    this.parent.redraw(this);
+  };
   
 })(jQuery);
